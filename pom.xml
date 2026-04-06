@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.example.oms</groupId>
+	<artifactId>order-experience-api</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>mule-application</packaging>
+	<name>order-experience-api</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<app.runtime>4.9.0</app.runtime>
+		<mule.maven.plugin.version>4.1.1</mule.maven.plugin.version>
+		<munit.version>3.3.0</munit.version>
+		<http.connector.version>1.9.0</http.connector.version>
+		<apikit.version>1.10.0</apikit.version>
+		<secure.props.version>1.2.7</secure.props.version>
+		<objectstore.version>1.2.2</objectstore.version>
+
+		<!-- ===== Anypoint Platform deployment properties =====
+		     Override at deploy time:  mvn deploy -DmuleDeploy -Danypoint.client.id=... -Danypoint.client.secret=...
+		     Or set as CI/CD env variables: ANYPOINT_CLIENT_ID / ANYPOINT_CLIENT_SECRET -->
+		<!-- Connected App credentials (used for Exchange publish + CloudHub deploy) -->
+		<anypoint.client.id>CONNECTED_APP_CLIENT_ID</anypoint.client.id>
+		<anypoint.client.secret>CONNECTED_APP_CLIENT_SECRET</anypoint.client.secret>
+		<!-- Anypoint Organization ID (UUID found in Anypoint Platform > Access Management > Organization) -->
+		<anypoint.org.id>YOUR_ORG_ID</anypoint.org.id>
+		<!-- Business Group name (use root org name if deploying to root) -->
+		<anypoint.business.group>YOUR_BUSINESS_GROUP</anypoint.business.group>
+		<!-- API Gateway environment credentials (from Anypoint Platform > API Manager > Environment credentials) -->
+		<anypoint.platform.client.id>ENV_CLIENT_ID</anypoint.platform.client.id>
+		<anypoint.platform.client.secret>ENV_CLIENT_SECRET</anypoint.platform.client.secret>
+		<!-- API Instance ID from API Manager (populated after Step 2: Create API Instance) -->
+		<api.instance.id>API_INSTANCE_ID</api.instance.id>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<version>${mule.maven.plugin.version}</version>
+				<extensions>true</extensions>
+<configuration>
+						<classifier>mule-application</classifier>
+					</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.mulesoft.munit.tools</groupId>
+				<artifactId>munit-maven-plugin</artifactId>
+				<version>${munit.version}</version>
+				<executions>
+					<execution>
+						<id>test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-http-connector</artifactId>
+			<version>${http.connector.version}</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.modules</groupId>
+			<artifactId>mule-apikit-module</artifactId>
+			<version>${apikit.version}</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.modules</groupId>
+			<artifactId>mule-secure-configuration-property-module</artifactId>
+			<version>${secure.props.version}</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-objectstore-connector</artifactId>
+			<version>${objectstore.version}</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>1.21</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-runner</artifactId>
+			<version>${munit.version}</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-tools</artifactId>
+			<version>${munit.version}</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>anypoint-exchange-v3</id>
+			<name>Anypoint Exchange V3</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
+		</repository>
+		<repository>
+			<id>mulesoft-releases</id>
+			<name>MuleSoft Releases</name>
+			<url>https://repository.mulesoft.org/releases/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>mulesoft-releases</id>
+			<name>MuleSoft Releases</name>
+			<url>https://repository.mulesoft.org/releases/</url>
+		</pluginRepository>
+	</pluginRepositories>
+</project>

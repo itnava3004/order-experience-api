@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%-5p %d [%t] [order-experience-api] [%X{correlationId}] %c - %m%n"/>
+    </Console>
+    <RollingFile name="RollingFile" fileName="logs/order-experience-api.log"
+                 filePattern="logs/order-experience-api-%d{yyyy-MM-dd}-%i.log.gz">
+      <PatternLayout pattern="%-5p %d [%t] [%X{correlationId}] %c - %m%n"/>
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="1"/>
+        <SizeBasedTriggeringPolicy size="10MB"/>
+      </Policies>
+      <DefaultRolloverStrategy max="30"/>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <AsyncLogger name="org.mule" level="INFO"/>
+    <AsyncLogger name="org.mule.extension.http" level="WARN"/>
+    <AsyncLogger name="org.mule.module.apikit" level="WARN"/>
+    <AsyncLogger name="com.example.oms" level="DEBUG"/>
+    <AsyncRoot level="INFO">
+      <AppenderRef ref="Console"/>
+      <AppenderRef ref="RollingFile"/>
+    </AsyncRoot>
+  </Loggers>
+</Configuration>

@@ -1,0 +1,139 @@
+#%RAML 1.0
+title: Order Experience API
+version: v1
+baseUri: /api/v1
+
+uses:
+  CommonTypes: libraries/common-types-lib.raml
+  ErrorLib: libraries/error-lib.raml
+  CommonTraits: libraries/common-traits-lib.raml
+
+securitySchemes:
+  oauth2:
+    type: OAuth 2.0
+    settings:
+      authorizationUri: https://{oauth2-host}/oauth2/authorize
+      accessTokenUri: https://{oauth2-host}/oauth2/token
+      authorizationGrants: [client_credentials]
+
+types:
+  CreateOrderRequest:
+    type: object
+    properties:
+      customerId:
+        type: string
+        pattern: "^[a-zA-Z0-9\\-]+$"
+      items:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          properties:
+            productId:
+              type: string
+              pattern: "^[a-zA-Z0-9\\-]+$"
+            quantity:
+              type: integer
+              minimum: 1
+      shippingAddress: CommonTypes.Address
+
+  UpdateOrderStatusRequest:
+    type: object
+    properties:
+      status:
+        type: string
+        enum: [PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED]
+
+/orders:
+  get:
+    is: [CommonTraits.correlation-headers]
+    securedBy: [oauth2]
+    description: List all orders
+    responses:
+      200:
+        body:
+          application/json:
+      400:
+        body:
+          application/json:
+            type: ErrorLib.ErrorResponse
+      401:
+        body:
+          application/json:
+            type: ErrorLib.ErrorResponse
+  post:
+    is: [CommonTraits.correlation-headers]
+    securedBy: [oauth2]
+    description: Create a new order
+    headers:
+      x-idempotency-key:
+        type: string
+        required: false
+        description: Client-generated unique key to prevent duplicate order creation on retry
+    body:
+      application/json:
+        type: CreateOrderRequest
+    responses:
+      201:
+        body:
+          application/json:
+      400:
+        body:
+          application/json:
+            type: ErrorLib.ErrorResponse
+      401:
+        body:
+          application/json:
+            type: ErrorLib.ErrorResponse
+
+  /{orderId}:
+    uriParameters:
+      orderId:
+        type: string
+        pattern: "^[a-zA-Z0-9\\-]+$"
+        description: Alphanumeric order identifier (hyphens allowed)
+    get:
+      is: [CommonTraits.correlation-headers]
+      securedBy: [oauth2]
+      description: Get order by ID
+      responses:
+        200:
+          body:
+            application/json:
+        400:
+          body:
+            application/json:
+              type: ErrorLib.ErrorResponse
+        401:
+          body:
+            application/json:
+              type: ErrorLib.ErrorResponse
+        404:
+          body:
+            application/json:
+              type: ErrorLib.ErrorResponse
+
+    /status:
+      put:
+        is: [CommonTraits.correlation-headers]
+        securedBy: [oauth2]
+        description: Update order status
+        body:
+          application/json:
+            type: UpdateOrderStatusRequest
+        responses:
+          200:
+            body:
+              application/json:
+          400:
+            body:
+              application/json:
+                type: ErrorLib.ErrorResponse
+          401:
+            body:
+              application/json:
+                type: ErrorLib.ErrorResponse
+          404:
+            body:
+              application/json:
+                type: ErrorLib.ErrorResponse

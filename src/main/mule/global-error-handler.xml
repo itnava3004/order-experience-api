@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+  <error-handler name="global-error-handler">
+
+    <on-error-propagate type="APIKIT:BAD_REQUEST">
+      <ee:transform>
+        <ee:message>
+          <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "ORD-400",
+  message: error.description default "Bad request",
+  timestamp: now(),
+  correlationId: correlationId
+}]]></ee:set-payload>
+        </ee:message>
+      </ee:transform>
+      <set-variable variableName="httpStatus" value="400"/>
+    </on-error-propagate>
+
+    <on-error-propagate type="APIKIT:NOT_FOUND">
+      <ee:transform>
+        <ee:message>
+          <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "ORD-404",
+  message: error.description default "Resource not found",
+  timestamp: now(),
+  correlationId: correlationId
+}]]></ee:set-payload>
+        </ee:message>
+      </ee:transform>
+      <set-variable variableName="httpStatus" value="404"/>
+    </on-error-propagate>
+
+    <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+      <ee:transform>
+        <ee:message>
+          <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "ORD-405",
+  message: "Method not allowed",
+  timestamp: now(),
+  correlationId: correlationId
+}]]></ee:set-payload>
+        </ee:message>
+      </ee:transform>
+      <set-variable variableName="httpStatus" value="405"/>
+    </on-error-propagate>
+
+    <on-error-propagate type="HTTP:UNAUTHORIZED, APP:UNAUTHORIZED">
+      <ee:transform>
+        <ee:message>
+          <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "AUTH-401",
+  message: "Unauthorized",
+  timestamp: now(),
+  correlationId: correlationId
+}]]></ee:set-payload>
+        </ee:message>
+      </ee:transform>
+      <set-variable variableName="httpStatus" value="401"/>
+    </on-error-propagate>
+
+    <on-error-propagate type="HTTP:CONNECTIVITY, HTTP:TIMEOUT">
+      <ee:transform>
+        <ee:message>
+          <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "SYS-503",
+  message: "Downstream service unavailable",
+  details: if (Mule::p('env') == 'dev') error.description else null,
+  timestamp: now(),
+  correlationId: correlationId
+}]]></ee:set-payload>
+        </ee:message>
+      </ee:transform>
+      <set-variable variableName="httpStatus" value="503"/>
+    </on-error-propagate>
+
+    <on-error-propagate type="MULE:EXPRESSION, MULE:TRANSFORMATION">
+      <ee:transform>
+        <ee:message>
+          <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "ORD-422",
+  message: "Request could not be processed due to a transformation error",
+  timestamp: now(),
+  correlationId: correlationId
+}]]></ee:set-payload>
+        </ee:message>
+      </ee:transform>
+      <set-variable variableName="httpStatus" value="422"/>
+    </on-error-propagate>
+
+    <on-error-propagate type="APIKIT:NOT_ACCEPTABLE, APIKIT:UNSUPPORTED_MEDIA_TYPE">
+      <ee:transform>
+        <ee:message>
+          <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "ORD-415",
+  message: "Unsupported media type or unacceptable response format",
+  timestamp: now(),
+  correlationId: correlationId
+}]]></ee:set-payload>
+        </ee:message>
+      </ee:transform>
+      <set-variable variableName="httpStatus" value="415"/>
+    </on-error-propagate>
+
+    <on-error-propagate type="ANY">
+      <ee:transform>
+        <ee:message>
+          <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "SYS-500",
+  message: "Internal server error",
+  details: if (Mule::p('env') == 'dev') error.description else null,
+  timestamp: now(),
+  correlationId: correlationId
+}]]></ee:set-payload>
+        </ee:message>
+      </ee:transform>
+      <set-variable variableName="httpStatus" value="500"/>
+    </on-error-propagate>
+
+  </error-handler>
+</mule>

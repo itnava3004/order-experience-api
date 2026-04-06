@@ -1,0 +1,10 @@
+#%RAML 1.0 Library
+usage: Error model
+types:
+  ErrorResponse:
+    properties:
+      errorCode: string
+      message: string
+      details?: string
+      timestamp: datetime
+      correlationId?: string

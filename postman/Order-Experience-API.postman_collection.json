@@ -1,0 +1,505 @@
+{
+  "info": {
+    "name": "Order Experience API",
+    "description": "MuleSoft Order Experience API — manages orders with downstream process API integration.\n\nBase URL: http://localhost:8081/api/v1\n\nAuthentication: Bearer token required in Authorization header.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "order-experience-api"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8081/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "YOUR_BEARER_TOKEN",
+      "type": "string"
+    },
+    {
+      "key": "orderId",
+      "value": "ORD-001",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Returns API health status. No authentication required."
+          },
+          "response": [
+            {
+              "name": "200 — Healthy",
+              "originalRequest": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["health"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"status\": \"UP\",\n  \"name\": \"order-experience-api\",\n  \"version\": \"1.0.0\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "List Orders",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response is JSON array', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test('Response time is less than 5s', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-correlation-id",
+                "value": "{{$guid}}",
+                "type": "text",
+                "description": "Optional correlation ID for request tracing"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            },
+            "description": "Retrieves a list of all orders. Requires Bearer token authentication."
+          },
+          "response": [
+            {
+              "name": "200 — Success",
+              "originalRequest": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["orders"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "[\n  {\n    \"orderId\": \"ORD-001\",\n    \"customerId\": \"CUST-001\",\n    \"status\": \"PENDING\",\n    \"items\": [\n      {\n        \"productId\": \"PROD-001\",\n        \"quantity\": 2\n      }\n    ],\n    \"shippingAddress\": {\n      \"line1\": \"123 Main St\",\n      \"city\": \"Austin\",\n      \"state\": \"TX\",\n      \"postalCode\": \"78701\",\n      \"country\": \"US\"\n    }\n  }\n]"
+            },
+            {
+              "name": "401 — Unauthorized",
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errorCode\": \"AUTH-401\",\n  \"message\": \"Unauthorized\",\n  \"timestamp\": \"2026-03-31T12:00:00Z\",\n  \"correlationId\": \"abc-123\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Response contains orderId', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('orderId');",
+                  "});",
+                  "",
+                  "// Save orderId for subsequent requests",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.orderId) {",
+                  "    pm.collectionVariables.set('orderId', jsonData.orderId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "x-correlation-id",
+                "value": "{{$guid}}",
+                "type": "text",
+                "description": "Optional correlation ID for request tracing"
+              },
+              {
+                "key": "x-idempotency-key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "description": "Optional idempotency key to prevent duplicate order creation on retry"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"CUST-001\",\n  \"items\": [\n    {\n      \"productId\": \"PROD-001\",\n      \"quantity\": 2\n    },\n    {\n      \"productId\": \"PROD-002\",\n      \"quantity\": 1\n    }\n  ],\n  \"shippingAddress\": {\n    \"line1\": \"123 Main St\",\n    \"line2\": \"Apt 4B\",\n    \"city\": \"Austin\",\n    \"state\": \"TX\",\n    \"postalCode\": \"78701\",\n    \"country\": \"US\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            },
+            "description": "Creates a new order. Returns 201 on success.\n\nThe `x-idempotency-key` header prevents duplicate orders when retrying a request.\n\nValid status values for items: PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED."
+          },
+          "response": [
+            {
+              "name": "201 — Created",
+              "originalRequest": {
+                "method": "POST",
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["orders"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"orderId\": \"ORD-002\",\n  \"customerId\": \"CUST-001\",\n  \"status\": \"PENDING\",\n  \"items\": [\n    {\n      \"productId\": \"PROD-001\",\n      \"quantity\": 2\n    },\n    {\n      \"productId\": \"PROD-002\",\n      \"quantity\": 1\n    }\n  ],\n  \"shippingAddress\": {\n    \"line1\": \"123 Main St\",\n    \"line2\": \"Apt 4B\",\n    \"city\": \"Austin\",\n    \"state\": \"TX\",\n    \"postalCode\": \"78701\",\n    \"country\": \"US\"\n  }\n}"
+            },
+            {
+              "name": "400 — Bad Request",
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errorCode\": \"ORD-400\",\n  \"message\": \"Bad request\",\n  \"details\": \"Missing required field: customerId\",\n  \"timestamp\": \"2026-03-31T12:00:00Z\",\n  \"correlationId\": \"abc-123\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Order by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains orderId', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('orderId');",
+                  "});",
+                  "",
+                  "pm.test('Response contains status', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('status');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-correlation-id",
+                "value": "{{$guid}}",
+                "type": "text",
+                "description": "Optional correlation ID for request tracing"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "{{orderId}}"]
+            },
+            "description": "Retrieves a specific order by its alphanumeric ID.\n\nThe `orderId` path parameter accepts alphanumeric characters and hyphens (e.g., ORD-001)."
+          },
+          "response": [
+            {
+              "name": "200 — Success",
+              "originalRequest": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/orders/ORD-001",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["orders", "ORD-001"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"orderId\": \"ORD-001\",\n  \"customerId\": \"CUST-001\",\n  \"status\": \"PENDING\",\n  \"items\": [\n    {\n      \"productId\": \"PROD-001\",\n      \"quantity\": 2\n    }\n  ],\n  \"shippingAddress\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"Austin\",\n    \"state\": \"TX\",\n    \"postalCode\": \"78701\",\n    \"country\": \"US\"\n  }\n}"
+            },
+            {
+              "name": "404 — Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errorCode\": \"ORD-404\",\n  \"message\": \"Resource not found\",\n  \"timestamp\": \"2026-03-31T12:00:00Z\",\n  \"correlationId\": \"abc-123\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Order Status",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Status is updated', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.status).to.eql('CONFIRMED');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "x-correlation-id",
+                "value": "{{$guid}}",
+                "type": "text",
+                "description": "Optional correlation ID for request tracing"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"CONFIRMED\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "{{orderId}}", "status"]
+            },
+            "description": "Updates the status of a specific order.\n\nValid status values: `PENDING`, `CONFIRMED`, `SHIPPED`, `DELIVERED`, `CANCELLED`."
+          },
+          "response": [
+            {
+              "name": "200 — Updated",
+              "originalRequest": {
+                "method": "PUT",
+                "url": {
+                  "raw": "{{baseUrl}}/orders/ORD-001/status",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["orders", "ORD-001", "status"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"orderId\": \"ORD-001\",\n  \"status\": \"CONFIRMED\"\n}"
+            },
+            {
+              "name": "404 — Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errorCode\": \"ORD-404\",\n  \"message\": \"Resource not found\",\n  \"timestamp\": \"2026-03-31T12:00:00Z\",\n  \"correlationId\": \"abc-123\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Error Scenarios",
+      "item": [
+        {
+          "name": "Unauthorized — No Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test('Error response contains errorCode', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.errorCode).to.eql('AUTH-401');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            },
+            "description": "Tests 401 Unauthorized response when no Authorization header is provided."
+          },
+          "response": [
+            {
+              "name": "401 — Unauthorized",
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errorCode\": \"AUTH-401\",\n  \"message\": \"Unauthorized\",\n  \"timestamp\": \"2026-03-31T12:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Not Found — Invalid Endpoint",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test('Error response contains errorCode', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.errorCode).to.eql('ORD-404');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/nonexistent",
+              "host": ["{{baseUrl}}"],
+              "path": ["nonexistent"]
+            },
+            "description": "Tests 404 Not Found response for a non-existent endpoint."
+          },
+          "response": [
+            {
+              "name": "404 — Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errorCode\": \"ORD-404\",\n  \"message\": \"Resource not found\",\n  \"timestamp\": \"2026-03-31T12:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Method Not Allowed — DELETE Orders",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 405', function () {",
+                  "    pm.response.to.have.status(405);",
+                  "});",
+                  "",
+                  "pm.test('Error response contains errorCode', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.errorCode).to.eql('ORD-405');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            },
+            "description": "Tests 405 Method Not Allowed response for unsupported HTTP method on /orders."
+          },
+          "response": [
+            {
+              "name": "405 — Method Not Allowed",
+              "status": "Method Not Allowed",
+              "code": 405,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errorCode\": \"ORD-405\",\n  \"message\": \"Method not allowed\",\n  \"timestamp\": \"2026-03-31T12:00:00Z\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

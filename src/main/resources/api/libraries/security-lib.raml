@@ -1,0 +1,9 @@
+#%RAML 1.0 Library
+usage: Security schemes
+securitySchemes:
+  oauth2:
+    type: OAuth 2.0
+    settings:
+      authorizationUri: https://{oauth2-host}/oauth2/authorize
+      accessTokenUri: https://{oauth2-host}/oauth2/token
+      authorizationGrants: [client_credentials]

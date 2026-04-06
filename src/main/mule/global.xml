@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+      xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+        http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+
+  <!-- ===== STEP 3: API Gateway Autodiscovery =====
+       apiId is the API Instance ID from Anypoint API Manager.
+       It is injected at deploy time via the api.id application property in pom.xml.
+       flowRef points to the HTTP listener flow that API Manager should govern. -->
+  <api-gateway:autodiscovery apiId="${api.id}" flowRef="order-experience-api-main"/>
+
+  <!-- Default env to 'local' if -Denv JVM argument is not provided -->
+  <global-property name="env" value="local"/>
+
+  <!-- Default secure.key if -Dsecure.key JVM argument is not provided -->
+  <global-property name="secure.key" value="local-dev-key-123"/>
+
+  <!-- Load environment-specific properties file.
+       Override default by setting -Denv=local|dev|uat|prod as a JVM argument in run configuration. -->
+  <configuration-properties file="properties/${env}.properties"/>
+
+  <!-- Load encrypted secure properties for the active environment.
+       Set -Dsecure.key=<decryption-key> as a JVM argument in run configuration. -->
+  <secure-properties:config name="secureConfig"
+      file="properties/${env}-secure.properties"
+      key="${secure.key}">
+    <secure-properties:encrypt algorithm="AES" mode="CBC"/>
+  </secure-properties:config>
+
+</mule>

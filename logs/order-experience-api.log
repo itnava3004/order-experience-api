@@ -1,0 +1,506 @@
+INFO  2026-03-31 11:17:07,215 [main] [] org.mule.munit.remote.RemoteRunner - Run Started
+INFO  2026-03-31 11:17:07,261 [main] [] org.mule.munit.remote.notifiers.SocketNotifier - Connected to localhost on port 65439
+INFO  2026-03-31 11:17:07,288 [main] [] org.mule.munit.remote.RemoteRunner - Mule container is starting, it could take a few minutes
+INFO  2026-03-31 11:17:21,204 [main] [] org.mule.munit.remote.coverage.CoverageManager - Starting coverage server
+INFO  2026-03-31 11:17:21,236 [pool-4-thread-1] [] org.mule.munit.remote.coverage.server.CoverageServer - Coverage Server starting...
+INFO  2026-03-31 11:17:21,247 [pool-4-thread-1] [] org.mule.munit.remote.coverage.server.CoverageServer - Waiting for coverage client connection in port [50480]...
+INFO  2026-03-31 11:17:42,252 [Embedded] [] org.mule.runtime.core.internal.logging - 
+**********************************************************************
+*                                                                    *
+*                         (((((((((((((((((((                        *
+*                     (((((                 ((((#                    *
+*                  &(((                        *(((                  *
+*                &(((                             (((                *
+*               (((     (((%               (((#     (((              *
+*              ((     (((((((             (((((((    (((             *
+*             ((     (((((((((           (((((((((     ((            *
+*            ((    #(((((((((((        #(((((((((((    (((           *
+*           #((    ((((((((((((((     ((((((((((((((    ((           *
+*           ((    ((((((  /(((((((   (((((((  /((((((    ((          *
+*           ((    ((((((    (((((((&(((((((    ((((((    ((          *
+*           ((    (((((      ((((((((((((*     ((((((    ((          *
+*           ((    ((((((      *(((((((((       ((((((    ((          *
+*           ((    ((((((        (((((((        ((((((   (((          *
+*            ((    ((((((                     ((((((    ((           *
+*            ((#    ((((((#                 (((((((    ((            *
+*             ((#    ((((((((             ((((((((    (((            *
+*              (((    (((((((              (((((     ((.             *
+*                ((      (((               (((     #((               *
+*                 /((                            (((                 *
+*                    (((                      &(((                   *
+*                      *((((&             &((((                      *
+*                           ((((((((((((((/                          *
+*                                                                    *
+*    ___  ___      _        ______            _   _                  *
+*    |  \/  |     | |       | ___ \          | | (_)                 *
+*    | .  . |_   _| | ___   | |_/ /   _ _ __ | |_ _ _ __ ___   ___   *
+*    | |\/| | | | | |/ _ \  |    / | | | '_ \| __| | '_ ` _ \ / _ \  *
+*    | |  | | |_| | |  __/  | |\ \ |_| | | | | |_| | | | | | |  __/  *
+*    \_|  |_/\__,_|_|\___|  \_| \_\__,_|_| |_|\__|_|_| |_| |_|\___|  *
+*                                                                    *
+*                                                                    *
+* Mule Runtime and Integration Platform                              *
+* Version: 4.9.0 Build: 653df691                                     *
+* MuleSoft, Inc.                                                     *
+* For more information go to                                         *
+* https://www.mulesoft.com/platform/soa/mule-esb-enterprise          *
+*                                                                    *
+* Server started: 3/31/26, 11:17 AM                                  *
+* JDK: 17.0.12 (mixed mode, sharing)                                 *
+* JDK properties:                                                    *
+*  - java.vendor = Eclipse Adoptium                                  *
+*  - java.vm.name = OpenJDK 64-Bit Server VM                         *
+* - java.home =                                                      *
+* C:\AnypointStudio-7.21.0-win64\AnypointStudio\plugins\org.mule.too *
+* ling.jdk.win32.x86_64_1.4.1                                        *
+* OS: Windows 11 -  (10.0, amd64)                                    *
+* Host: hdc3-lx-151br43 (192.168.29.209)                             *
+* Mule services:                                                     *
+*  - api-gateway-contract-service-1.5.0                              *
+*  - api-gateway-events-collector-service-1.5.0                      *
+*  - mule-service-http-ee-1.12.0                                     *
+*  - mule-service-oauth-ee-1.6.0                                     *
+*  - mule-service-scheduler-1.9.0                                    *
+*  - mule-service-soap-1.9.0                                         *
+*  - mule-service-weave-ee-2.9.0                                     *
+* Mule server plugins:                                               *
+*  - munit-coverage-plugin-3.4.0-mule-server-plugin.jar              *
+* Mule system properties:                                            *
+*  - mule.testingMode =                                              *
+* - mule.home =                                                      *
+* C:\Users\aishwarya.nalanagula\AppData\Local\Temp\munit-temp-dir\mu *
+* nitworkingdir16608373535281913048\container                        *
+*  - mule.mode.embedded = true                                       *
+**********************************************************************
+INFO  2026-03-31 11:17:42,845 [Embedded] [] org.mule.runtime.core.internal.logging - 
+**********************************************************************
+* Cluster configuration                                              *
+*                                                                    *
+* Cluster mode disabled                                              *
+**********************************************************************
+INFO  2026-03-31 11:17:42,876 [Embedded] [] com.mulesoft.mule.runtime.plugin.discoverer.FileSystemPluginDiscoverer - Unzipping plugin file: munit-coverage-plugin-3.4.0-mule-server-plugin.jar
+WARN  2026-03-31 11:17:42,878 [Embedded] [] com.mulesoft.mule.runtime.plugin.discoverer.FileSystemPluginDiscoverer - Cannot unzip plugin file 'munit-coverage-plugin-3.4.0-mule-server-plugin.jar'
+WARN  2026-03-31 11:17:42,880 [Embedded] [] com.mulesoft.mule.runtime.plugin.discoverer.FileSystemPluginDiscoverer - Cannot delete plugin file 'munit-coverage-plugin-3.4.0-mule-server-plugin.jar'. Plugin will be overwritten on restart
+INFO  2026-03-31 11:17:42,882 [Embedded] [] com.mulesoft.mule.runtime.plugin.factory.ServerPluginDescriptorFactory - Creating plugin from folder C:\Users\aishwarya.nalanagula\AppData\Local\Temp\munit-temp-dir\munitworkingdir16608373535281913048\container\server-plugins\munit-coverage-plugin-3.4.0-mule-server-plugin
+WARN  2026-03-31 11:17:42,882 [Embedded] [] com.mulesoft.mule.runtime.plugin.discoverer.FileSystemPluginDiscoverer - Cannot load descriptor for plugin 'munit-coverage-plugin-3.4.0-mule-server-plugin': Artifact descriptor does not exists: C:\Users\aishwarya.nalanagula\AppData\Local\Temp\munit-temp-dir\munitworkingdir16608373535281913048\container\server-plugins\munit-coverage-plugin-3.4.0-mule-server-plugin\META-INF\mule-artifact\mule-artifact.json (org.mule.runtime.module.artifact.api.descriptor.ArtifactDescriptorCreateException)
+INFO  2026-03-31 11:17:42,883 [Embedded] [] com.mulesoft.mule.runtime.plugin.factory.ServerPluginDescriptorFactory - Creating plugin from folder C:\Users\aishwarya.nalanagula\AppData\Local\Temp\munit-temp-dir\munitworkingdir16608373535281913048\container\server-plugins\munit-coverage-plugin-3.4.0-mule-server-plugin.jar
+INFO  2026-03-31 11:17:42,953 [Embedded] [] com.mulesoft.mule.runtime.plugin.manager.MulePluginManager - Registering plugin: coverage-server-plugin
+INFO  2026-03-31 11:17:42,956 [Embedded] [] org.mule.munit.plugins.coverage.CoverageServerPlugin - Initialising coverage plugin...
+INFO  2026-03-31 11:17:43,070 [Embedded] [] com.mulesoft.mule.runtime.plugin.manager.MulePluginManager - Starting plugin: coverage-server-plugin
+INFO  2026-03-31 11:17:43,374 [Embedded] [] org.mule.runtime.core.internal.logging - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ New domain 'default'                                                         +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2026-03-31 11:17:43,375 [Embedded] [] org.mule.runtime.core.internal.logging - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing domain 'default'                                                +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2026-03-31 11:17:45,456 [Embedded] [] org.mule.runtime.api.metadata.AbstractDataTypeBuilderFactory - Loaded AbstractDataTypeBuilderFactory implementation 'org.mule.runtime.core.api.metadata.DefaultDataTypeBuilderFactory' from classloader 'jdk.internal.loader.Loader@13213f26'
+INFO  2026-03-31 11:17:45,548 [Embedded] [] org.mule.runtime.module.deployment.internal.processor.FallbackArtifactConfigurationProcessor - Serialized AST not avaliable for artifact 'default'
+INFO  2026-03-31 11:17:47,270 [Embedded] [] org.mule.service.scheduler.internal.config.ContainerThreadPoolsConfig - No thread pools config file found. Using default values.
+INFO  2026-03-31 11:17:47,327 [CronSchedulerHandler] [] org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+INFO  2026-03-31 11:17:47,354 [CronSchedulerHandler] [] org.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+INFO  2026-03-31 11:17:47,354 [CronSchedulerHandler] [] org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+INFO  2026-03-31 11:17:47,357 [CronSchedulerHandler] [] org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+INFO  2026-03-31 11:17:47,358 [CronSchedulerHandler] [] org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) '[MuleRuntime].' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 1 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+INFO  2026-03-31 11:17:47,358 [CronSchedulerHandler] [] org.quartz.impl.StdSchedulerFactory - Quartz scheduler '[MuleRuntime].' initialized from an externally provided properties instance.
+INFO  2026-03-31 11:17:47,358 [CronSchedulerHandler] [] org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+INFO  2026-03-31 11:17:47,358 [Embedded] [] org.quartz.core.QuartzScheduler - Scheduler [MuleRuntime]._$_NON_CLUSTERED started.
+INFO  2026-03-31 11:17:47,379 [Embedded] [] org.mule.runtime.core.internal.logging - 
+**********************************************************************
+* Started DefaultSchedulerService                                    *
+*                                                                    *
+* Resolved configuration values:                                     *
+*                                                                    *
+* Pooling strategy:       UBER                                       *
+* gracefulShutdownTimeout:       15000 ms                            *
+* uber.threadPool.maxSize:         763                               *
+* uber.threadPool.threadKeepAlive: 30000 ms                          *
+*                                                                    *
+* These can be modified by editing 'conf/scheduler-pools.conf'       *
+**********************************************************************
+INFO  2026-03-31 11:17:47,388 [ArtifactDeployer.start.01] [] org.mule.runtime.core.internal.logging - 
+**********************************************************************
+* Domain: default                                                    *
+* OS encoding: UTF-8, Mule encoding: UTF-8                           *
+*                                                                    *
+**********************************************************************
+INFO  2026-03-31 11:17:47,390 [ArtifactDeployer.start.01] [] org.mule.runtime.core.internal.logging - 
+**********************************************************************
+* Started domain 'default'                                           *
+**********************************************************************
+INFO  2026-03-31 11:17:47,401 [Embedded] [] org.mule.runtime.core.internal.logging - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Mule is up and kicking (every 5000ms)                                        +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2026-03-31 11:17:47,402 [Embedded] [] org.mule.runtime.core.internal.logging - 
+**********************************************************************
+*              - - + DOMAIN + - -               * - - + STATUS + - - *
+**********************************************************************
+* default                                       * DEPLOYED           *
+**********************************************************************
+
+INFO  2026-03-31 11:17:47,422 [main] [] org.mule.munit.remote.container.ContainerSuiteRunDispatcher - Suite will run with MMV 4.9.0
+INFO  2026-03-31 11:17:47,689 [Embedded] [] org.mule.maven.client.internal.MuleMavenClient - About to fetch required dependencies for artifact: com.example.oms:order-experience-api:pom:1.0.0-SNAPSHOT. This may take a while...
+WARN  2026-03-31 11:17:50,632 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-api' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,632 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-metadata-model-api' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,632 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-message-metadata-model' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,632 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,632 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration-persistence' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,632 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:api-annotations' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,632 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-embedded-api' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,632 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-embedded-commons' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,632 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-api' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,633 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-metadata-model-api' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,633 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-message-metadata-model' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,633 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,633 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration-persistence' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,633 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:api-annotations' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,633 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-embedded-api' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,633 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-embedded-commons' is a Mule Runtime dependency. It will not be used by 'munit-runner' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,640 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-api' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,640 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-metadata-model-api' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,640 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-message-metadata-model' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,640 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,640 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration-persistence' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,640 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:api-annotations' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,641 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-api' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,641 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-metadata-model-api' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,641 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-message-metadata-model' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,641 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,642 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration-persistence' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,642 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:api-annotations' is a Mule Runtime dependency. It will not be used by 'munit-tools' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,651 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-extensions-api' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,651 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-api' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,651 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-metadata-model-api' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,652 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,652 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration-persistence' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,652 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:api-annotations' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,654 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-metadata-model-java' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,654 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-message-metadata-model' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,654 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-extensions-api' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,654 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-api' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,654 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-metadata-model-api' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,654 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,654 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-artifact-declaration-persistence' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,654 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:api-annotations' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,654 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-metadata-model-java' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+WARN  2026-03-31 11:17:50,654 [Embedded] [] org.mule.runtime.module.artifact.activation.internal.classloader.AbstractArtifactClassLoaderConfigurationAssembler - Shared library 'org.mule.runtime:mule-message-metadata-model' is a Mule Runtime dependency. It will not be used by 'mule-http-connector' in order to avoid classloading issues. Please consider removing it, or at least not putting it as a sharedLibrary.
+INFO  2026-03-31 11:17:50,775 [Embedded] [] org.mule.runtime.core.internal.logging - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ New app 'order-experience-api'                                               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2026-03-31 11:17:50,782 [Embedded] [] org.mule.runtime.core.internal.logging - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'order-experience-api'                                      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+WARN  2026-03-31 11:17:52,698 [Embedded] [] org.mule.runtime.extension.internal.loader.enricher.ConfigRefDeclarationEnricher - Component 'console' in extension 'APIKit' already has a 'config-ref' parameter defined. Skipping ConfigRefDeclarationEnricher for it.
+WARN  2026-03-31 11:17:52,698 [Embedded] [] org.mule.runtime.extension.internal.loader.enricher.ConfigRefDeclarationEnricher - Component 'router' in extension 'APIKit' already has a 'config-ref' parameter defined. Skipping ConfigRefDeclarationEnricher for it.
+INFO  2026-03-31 11:17:55,679 [Embedded] [] org.mule.runtime.api.el.AbstractBindingContextBuilderFactory - Loaded BindingContextBuilderFactory implementation 'org.mule.runtime.core.api.el.DefaultBindingContextBuilderFactory' from classloader 'jdk.internal.loader.Loader@13213f26'
+WARN  2026-03-31 11:17:55,695 [Embedded] [] org.mule.runtime.core.internal.el.DefaultBindingContextBuilder$BindingContextImplementation - Two modules with namespace 'Munit' were found in a binding context. Set log level to DEBUG for details
+WARN  2026-03-31 11:17:55,697 [Embedded] [] org.mule.runtime.core.internal.el.DefaultBindingContextBuilder$BindingContextImplementation - Two modules with namespace 'Batch' were found in a binding context. Set log level to DEBUG for details
+INFO  2026-03-31 11:17:57,081 [Embedded] [] org.mule.runtime.core.internal.util.journal.TransactionJournal - Using files for tx logs C:\Users\aishwarya.nalanagula\AppData\Local\Temp\munit-temp-dir\munitworkingdir16608373535281913048\container\.\.mule\order-experience-api\queue-tx-log\tx1.log and C:\Users\aishwarya.nalanagula\AppData\Local\Temp\munit-temp-dir\munitworkingdir16608373535281913048\container\.\.mule\order-experience-api\queue-tx-log\tx2.log
+INFO  2026-03-31 11:17:57,114 [Embedded] [] org.mule.runtime.core.internal.util.journal.TransactionJournal - Using files for tx logs C:\Users\aishwarya.nalanagula\AppData\Local\Temp\munit-temp-dir\munitworkingdir16608373535281913048\container\.\.mule\order-experience-api\queue-xa-tx-log\tx1.log and C:\Users\aishwarya.nalanagula\AppData\Local\Temp\munit-temp-dir\munitworkingdir16608373535281913048\container\.\.mule\order-experience-api\queue-xa-tx-log\tx2.log
+INFO  2026-03-31 11:17:57,579 [ArtifactDeployer.start.01] [] org.mule.runtime.core.internal.logging - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'order-experience-api'                                          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2026-03-31 11:17:57,582 [ArtifactDeployer.start.01] [] org.mule.runtime.core.internal.util.queue.QueueXaResourceManager - Starting ResourceManager
+INFO  2026-03-31 11:17:57,582 [ArtifactDeployer.start.01] [] org.mule.runtime.core.internal.util.queue.QueueXaResourceManager - Started ResourceManager
+INFO  2026-03-31 11:17:57,628 [ArtifactDeployer.start.01] [] org.mule.runtime.core.internal.logging - 
+**********************************************************************
+* Application: order-experience-api                                  *
+* OS encoding: UTF-8, Mule encoding: UTF-8                           *
+*                                                                    *
+**********************************************************************
+INFO  2026-03-31 11:17:57,631 [ArtifactDeployer.start.01] [] org.mule.runtime.core.internal.logging - 
+**********************************************************************
+* Started app 'order-experience-api'                                 *
+* Application plugins:                                               *
+*  - MUnit : 3.3.0                                                   *
+*  - MUnit Tools : 3.3.0                                             *
+*  - ObjectStore : 1.2.2                                             *
+*  - Sockets : 1.2.4                                                 *
+*  - secure-properties : 1.2.7                                       *
+*  - HTTP : 1.9.0                                                    *
+*  - APIKit : 1.10.0                                                 *
+* Application libraries:                                             *
+*  - commons-compress-1.21.jar                                       *
+**********************************************************************
+INFO  2026-03-31 11:17:57,662 [munit.01] [] org.mule.munit.runner.remote.api.server.RunnerServer - Waiting for client connection 
+INFO  2026-03-31 11:17:57,693 [munit.01] [] org.mule.munit.runner.remote.api.server.RunnerServer - Client connection received from 127.0.0.1 - true
+WARN  2026-03-31 11:18:12,313 [munit.01] [] org.mule.runtime.config.internal.dsl.spring.ComponentConfigurationBuilder - Parameter ignore from extension munit has a defaultValue configured in the componentBuildingDefinition but not in the extensionModel.
+INFO  2026-03-31 11:18:12,598 [munit.01] [] org.mule.runtime.api.message.AbstractMuleMessageBuilderFactory - Loaded MuleMessageBuilderFactory implementation 'org.mule.runtime.core.internal.message.DefaultMessageBuilderFactory' from classloader 'jdk.internal.loader.Loader@13213f26'
+WARN  2026-03-31 11:18:12,901 [munit.01] [] org.mule.runtime.module.tls.internal.socket.TlsProperties - File tls-default.conf not found, using default configuration.
+INFO  2026-03-31 11:18:12,901 [munit.01] [] org.mule.runtime.api.tls.AbstractTlsContextFactoryBuilderFactory - Loaded TlsContextFactoryBuilderFactory implementation 'org.mule.runtime.module.tls.api.DefaultTlsContextFactoryBuilderFactory' from classloader 'jdk.internal.loader.Loader@13213f26'
+INFO  2026-03-31 11:18:24,599 [munit.01] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Initialising Bean: org.mule.runtime.module.extension.internal.runtime.config.ConfigurationProviderToolingAdapter-httpListenerConfig
+INFO  2026-03-31 11:18:30,173 [munit.01] [] org.mule.service.http.impl.config.ContainerTcpServerSocketProperties - Server sockets config file not found. Using default values.
+INFO  2026-03-31 11:18:30,475 [munit.01] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Initialising Bean: org.mule.runtime.module.extension.internal.runtime.config.ConfigurationProviderToolingAdapter-processApiConfig
+INFO  2026-03-31 11:18:30,481 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Initialising flow: order-experience-api-main
+INFO  2026-03-31 11:18:30,605 [munit.01] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Initialising Bean: listener
+INFO  2026-03-31 11:18:30,735 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Initialising flow: health-check-flow
+INFO  2026-03-31 11:18:30,749 [munit.01] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Initialising Bean: listener
+INFO  2026-03-31 11:18:30,755 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Initialising flow: put:\orders\(orderId)\status:order-experience-api-config
+INFO  2026-03-31 11:18:30,942 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Initialising flow: get:\orders\(orderId):order-experience-api-config
+INFO  2026-03-31 11:18:30,998 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Initialising flow: post:\orders:order-experience-api-config
+INFO  2026-03-31 11:18:31,055 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Initialising flow: get:\orders:order-experience-api-config
+INFO  2026-03-31 11:18:33,964 [munit.01] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Starting Bean: org.mule.runtime.module.extension.internal.runtime.config.ConfigurationProviderToolingAdapter-httpListenerConfig
+INFO  2026-03-31 11:18:33,996 [munit.01] [] org.mule.service.http.impl.service.server.grizzly.GrizzlyHttpServer - Listening for connections on 'http://0.0.0.0:8081'
+INFO  2026-03-31 11:18:33,998 [munit.01] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Starting Bean: org.mule.runtime.module.extension.internal.runtime.config.ConfigurationProviderToolingAdapter-processApiConfig
+INFO  2026-03-31 11:18:34,000 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Starting flow: order-experience-api-main
+INFO  2026-03-31 11:18:34,741 [munit.01] [] org.mule.runtime.core.internal.construct.AbstractFlowConstruct - Not starting source for 'order-experience-api-main' because of org.mule.munit.runner.component.state.MunitComponentInitialStateManager@164c6323
+INFO  2026-03-31 11:18:34,743 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Starting flow: health-check-flow
+INFO  2026-03-31 11:18:34,754 [munit.01] [] org.mule.runtime.core.internal.construct.AbstractFlowConstruct - Not starting source for 'health-check-flow' because of org.mule.munit.runner.component.state.MunitComponentInitialStateManager@164c6323
+INFO  2026-03-31 11:18:34,754 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Starting flow: put:\orders\(orderId)\status:order-experience-api-config
+INFO  2026-03-31 11:18:34,793 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Starting flow: get:\orders\(orderId):order-experience-api-config
+INFO  2026-03-31 11:18:34,817 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Starting flow: post:\orders:order-experience-api-config
+INFO  2026-03-31 11:18:34,882 [munit.01] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Starting flow: get:\orders:order-experience-api-config
+ERROR 2026-03-31 11:18:35,592 [[MuleRuntime].uber.02: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [77795378-417e-4e4c-90fc-ee1fbc2a2f7f] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : Missing or invalid Authorization header
+Element               : order-experience-api-main/processors/1/route/0/processors/0 @ order-experience-api:order-experience-api.xml:38
+Element DSL           : <raise-error type="APP:UNAUTHORIZED" description="Missing or invalid Authorization header"></raise-error>
+Error type            : APP:UNAUTHORIZED
+FlowStack             : at order-experience-api-main(order-experience-api-main/processors/1/route/0/processors/0 @ order-experience-api:order-experience-api.xml:38)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:35,681 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: error-handler-unauthorized-test - Time elapsed: 0.58 sec
+ERROR 2026-03-31 11:18:35,738 [[MuleRuntime].uber.02: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [0cb5aafc-69e7-47ae-9da4-681c70c08532] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : 
+Element               : (None)
+Element DSL           : (None)
+Error type            : APIKIT:METHOD_NOT_ALLOWED
+FlowStack             : (None)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:35,746 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: error-handler-method-not-allowed-test - Time elapsed: 0.06 sec
+ERROR 2026-03-31 11:18:35,769 [[MuleRuntime].uber.02: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [f0272be1-5576-4a5f-a233-399f6d7c2b22] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : 
+Element               : (None)
+Element DSL           : (None)
+Error type            : HTTP:CONNECTIVITY
+FlowStack             : (None)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:35,825 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: error-handler-connectivity-test - Time elapsed: 0.08 sec
+ERROR 2026-03-31 11:18:35,846 [[MuleRuntime].uber.02: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [8b871eb2-82e3-407f-a731-37ee229a092e] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : 
+Element               : (None)
+Element DSL           : (None)
+Error type            : APIKIT:NOT_FOUND
+FlowStack             : (None)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:35,885 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: error-handler-not-found-test - Time elapsed: 0.06 sec
+ERROR 2026-03-31 11:18:35,912 [[MuleRuntime].uber.02: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [ff189e8c-62c6-4c16-a619-3f5ebb5c58a2] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : 
+Element               : (None)
+Element DSL           : (None)
+Error type            : APIKIT:UNSUPPORTED_MEDIA_TYPE
+FlowStack             : (None)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:35,923 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: error-handler-unsupported-media-test - Time elapsed: 0.04 sec
+ERROR 2026-03-31 11:18:35,953 [[MuleRuntime].uber.02: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [73a2c622-cd74-4abe-8ac6-51558dbe8a12] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : 
+Element               : (None)
+Element DSL           : (None)
+Error type            : MULE:SECURITY
+FlowStack             : (None)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:35,963 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: error-handler-catch-all-test - Time elapsed: 0.04 sec
+ERROR 2026-03-31 11:18:35,992 [[MuleRuntime].uber.02: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [4a7e5e1b-5d3d-48c0-850f-798a2ab396d6] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : 
+Element               : (None)
+Element DSL           : (None)
+Error type            : APIKIT:BAD_REQUEST
+FlowStack             : (None)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:36,010 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: error-handler-bad-request-test - Time elapsed: 0.05 sec
+INFO  2026-03-31 11:18:36,069 [[MuleRuntime].uber.02: [order-experience-api].get:\orders\(orderId):order-experience-api-config.CPU_LITE @2f818e1a] [b1ec0056-4c39-4a6b-93e7-248e944ed937] org.mule.runtime.core.internal.processor.LoggerMessageProcessor - [order-experience-api] Get Order by ID | correlationId=test-correlation-id
+INFO  2026-03-31 11:18:36,205 [[MuleRuntime].uber.02: [order-experience-api].get:\orders\(orderId):order-experience-api-config.CPU_LITE @2f818e1a] [b1ec0056-4c39-4a6b-93e7-248e944ed937] org.mule.runtime.core.internal.processor.LoggerMessageProcessor - [order-experience-api] Process API responded | status=200 | correlationId=test-correlation-id
+INFO  2026-03-31 11:18:36,357 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: get-order-by-id-test - Time elapsed: 0.35 sec
+INFO  2026-03-31 11:18:36,384 [[MuleRuntime].uber.06: [order-experience-api].put:\orders\(orderId)\status:order-experience-api-config.CPU_LITE @6b72bd27] [dfa30f7f-7798-4f87-ad6d-9eff5f34b5d3] org.mule.runtime.core.internal.processor.LoggerMessageProcessor - [order-experience-api] Update Order Status | correlationId=test-correlation-id
+INFO  2026-03-31 11:18:36,410 [[MuleRuntime].uber.06: [order-experience-api].put:\orders\(orderId)\status:order-experience-api-config.CPU_LITE @6b72bd27] [dfa30f7f-7798-4f87-ad6d-9eff5f34b5d3] org.mule.runtime.core.internal.processor.LoggerMessageProcessor - [order-experience-api] Process API responded | status=200 | correlationId=test-correlation-id
+INFO  2026-03-31 11:18:36,441 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: update-order-status-test - Time elapsed: 0.08 sec
+ERROR 2026-03-31 11:18:36,465 [[MuleRuntime].uber.05: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [2ead6254-ee6e-407a-95cf-827e6fdc9e79] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : 
+Element               : (None)
+Element DSL           : (None)
+Error type            : MULE:EXPRESSION
+FlowStack             : (None)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:36,473 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: error-handler-expression-test - Time elapsed: 0.03 sec
+ERROR 2026-03-31 11:18:36,507 [[MuleRuntime].uber.05: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [60150d78-e434-4473-ae51-b73b13ba7031] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : 
+Element               : (None)
+Element DSL           : (None)
+Error type            : HTTP:TIMEOUT
+FlowStack             : (None)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:36,521 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: error-handler-timeout-test - Time elapsed: 0.05 sec
+INFO  2026-03-31 11:18:36,600 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: main-flow-authorized-test - Time elapsed: 0.08 sec
+INFO  2026-03-31 11:18:36,649 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: health-check-test - Time elapsed: 0.05 sec
+INFO  2026-03-31 11:18:36,693 [[MuleRuntime].uber.05: [order-experience-api].post:\orders:order-experience-api-config.CPU_LITE @1f9bd68e] [e493289d-e8f9-43b8-89f9-aeb83aa32495] org.mule.runtime.core.internal.processor.LoggerMessageProcessor - [order-experience-api] Create Order | correlationId=test-correlation-id
+INFO  2026-03-31 11:18:36,737 [[MuleRuntime].uber.02: [order-experience-api].post:\orders:order-experience-api-config.CPU_INTENSIVE @4f1c0c1d] [e493289d-e8f9-43b8-89f9-aeb83aa32495] org.mule.runtime.core.internal.processor.LoggerMessageProcessor - [order-experience-api] Process API responded | status=201 | correlationId=test-correlation-id
+INFO  2026-03-31 11:18:36,784 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: create-order-test - Time elapsed: 0.13 sec
+ERROR 2026-03-31 11:18:36,802 [[MuleRuntime].uber.02: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [9baa0fb7-bad9-4bee-8c54-4accb9c2a403] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : Missing or invalid Authorization header
+Element               : order-experience-api-main/processors/1/route/0/processors/0 @ order-experience-api:order-experience-api.xml:38
+Element DSL           : <raise-error type="APP:UNAUTHORIZED" description="Missing or invalid Authorization header"></raise-error>
+Error type            : APP:UNAUTHORIZED
+FlowStack             : at order-experience-api-main(order-experience-api-main/processors/1/route/0/processors/0 @ order-experience-api:order-experience-api.xml:38)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:36,810 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: main-flow-unauthorized-test - Time elapsed: 0.02 sec
+ERROR 2026-03-31 11:18:36,831 [[MuleRuntime].uber.02: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [80f61201-2ebc-472a-9c5b-a179b4bcfa3d] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : 
+Element               : (None)
+Element DSL           : (None)
+Error type            : APIKIT:NOT_ACCEPTABLE
+FlowStack             : (None)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:36,839 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: error-handler-not-acceptable-test - Time elapsed: 0.03 sec
+ERROR 2026-03-31 11:18:36,862 [[MuleRuntime].uber.02: [order-experience-api].order-experience-api-main.CPU_LITE @1669aa88] [e813f763-299a-4b77-9218-38afdc829acf] org.mule.runtime.core.privileged.exception.DefaultExceptionListener - 
+********************************************************************************
+Message               : 
+Element               : (None)
+Element DSL           : (None)
+Error type            : MULE:TRANSFORMATION
+FlowStack             : (None)
+
+  (set debug level logging or '-Dmule.verbose.exceptions=true' for everything)
+********************************************************************************
+
+INFO  2026-03-31 11:18:36,870 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: error-handler-transformation-test - Time elapsed: 0.03 sec
+INFO  2026-03-31 11:18:36,888 [[MuleRuntime].uber.02: [order-experience-api].get:\orders:order-experience-api-config.CPU_LITE @6e76030d] [73086065-344d-490c-bee2-35d4b5a4c9e9] org.mule.runtime.core.internal.processor.LoggerMessageProcessor - [order-experience-api] List Orders | correlationId=test-correlation-id
+WARN  2026-03-31 11:18:36,896 [[MuleRuntime].uber.02: [order-experience-api].get:\orders:order-experience-api-config.CPU_LITE @6e76030d] [73086065-344d-490c-bee2-35d4b5a4c9e9] com.mulesoft.modules.configuration.properties.internal.SecureConfigurationPropertiesProvider - Secure Properties file has non-encrypted values. Check file 'properties/local-secure.properties'. Remember to encrypt properties or use file-level encryption before going into productive environment
+INFO  2026-03-31 11:18:36,903 [[MuleRuntime].uber.02: [order-experience-api].get:\orders:order-experience-api-config.CPU_LITE @6e76030d] [73086065-344d-490c-bee2-35d4b5a4c9e9] org.mule.runtime.core.internal.processor.LoggerMessageProcessor - [order-experience-api] Process API responded | status=200 | correlationId=test-correlation-id
+INFO  2026-03-31 11:18:36,962 [munit.01] [] org.mule.munit.runner.model.Suite - SUCCESS - test: get-orders-test - Time elapsed: 0.09 sec
+INFO  2026-03-31 11:18:36,965 [munit.01] [] org.mule.munit.runner.remote.api.server.RunnerServer - Waiting for client connection 
+INFO  2026-03-31 11:18:36,970 [Embedded] [] org.mule.runtime.module.deployment.internal.DefaultArchiveDeployer - ================== Request to Undeploy Artifact: order-experience-api
+INFO  2026-03-31 11:18:37,149 [Embedded] [] org.mule.munit.plugins.coverage.server.CoverageServerClient - Sending covered locations report...
+INFO  2026-03-31 11:18:37,157 [Embedded] [] org.mule.munit.plugins.coverage.server.CoverageServerClient - Connected to localhost in port 50480
+INFO  2026-03-31 11:18:37,157 [pool-4-thread-1] [] org.mule.munit.remote.coverage.server.CoverageServer - Coverage client connection received from 127.0.0.1 - true
+INFO  2026-03-31 11:18:37,179 [Embedded] [] org.mule.munit.plugins.coverage.server.CoverageServerClient - Sending covered locations report...
+INFO  2026-03-31 11:18:37,182 [Embedded] [] org.mule.munit.plugins.coverage.server.CoverageServerClient - Connected to localhost in port 50480
+INFO  2026-03-31 11:18:37,188 [Embedded] [] org.mule.runtime.core.internal.logging - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping application 'order-experience-api'                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2026-03-31 11:18:37,179 [pool-11-thread-1] [] org.mule.munit.remote.coverage.CoverageManager - accumulating covered locations
+INFO  2026-03-31 11:18:37,181 [pool-4-thread-1] [] org.mule.munit.remote.coverage.server.CoverageServer - Coverage client connection received from 127.0.0.1 - true
+INFO  2026-03-31 11:18:37,191 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Stopping flow: order-experience-api-main
+INFO  2026-03-31 11:18:37,193 [Embedded] [] org.mule.runtime.core.internal.construct.AbstractFlowConstruct - Not stopping source for 'order-experience-api-main', it was not started because of org.mule.munit.runner.component.state.MunitComponentInitialStateManager@164c6323
+INFO  2026-03-31 11:18:37,206 [pool-12-thread-1] [] org.mule.munit.remote.coverage.CoverageManager - accumulating covered locations
+WARN  2026-03-31 11:18:42,206 [Embedded] [] org.mule.runtime.core.internal.processor.strategy.AbstractStreamProcessingStrategyFactory - Subscribers of ProcessingStrategy for flow 'order-experience-api-main' not completed in 5000 ms
+WARN  2026-03-31 11:18:42,206 [Embedded] [] org.mule.runtime.core.internal.processor.strategy.AbstractStreamProcessingStrategyFactory - Subscribers of ProcessingStrategy for flow 'order-experience-api-main' not completed in 5000 ms
+WARN  2026-03-31 11:18:42,206 [Embedded] [] org.mule.runtime.core.internal.processor.strategy.AbstractStreamProcessingStrategyFactory - Subscribers of ProcessingStrategy for flow 'order-experience-api-main' not completed in 5000 ms
+WARN  2026-03-31 11:18:42,207 [Embedded] [] org.mule.runtime.core.internal.processor.strategy.AbstractStreamProcessingStrategyFactory - Subscribers of ProcessingStrategy for flow 'order-experience-api-main' not completed in 5000 ms
+WARN  2026-03-31 11:18:42,207 [Embedded] [] org.mule.runtime.core.internal.processor.strategy.AbstractStreamProcessingStrategyFactory - Subscribers of ProcessingStrategy for flow 'order-experience-api-main' not completed in 5000 ms
+WARN  2026-03-31 11:18:42,207 [Embedded] [] org.mule.runtime.core.internal.processor.strategy.AbstractStreamProcessingStrategyFactory - Subscribers of ProcessingStrategy for flow 'order-experience-api-main' not completed in 5000 ms
+WARN  2026-03-31 11:18:42,207 [Embedded] [] org.mule.runtime.core.internal.processor.strategy.AbstractStreamProcessingStrategyFactory - Subscribers of ProcessingStrategy for flow 'order-experience-api-main' not completed in 5000 ms
+WARN  2026-03-31 11:18:42,207 [Embedded] [] org.mule.runtime.core.internal.processor.strategy.AbstractStreamProcessingStrategyFactory - Subscribers of ProcessingStrategy for flow 'order-experience-api-main' not completed in 5000 ms
+INFO  2026-03-31 11:18:42,212 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Stopping flow: health-check-flow
+INFO  2026-03-31 11:18:42,213 [Embedded] [] org.mule.runtime.core.internal.construct.AbstractFlowConstruct - Not stopping source for 'health-check-flow', it was not started because of org.mule.munit.runner.component.state.MunitComponentInitialStateManager@164c6323
+INFO  2026-03-31 11:18:42,216 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Stopping flow: get:\orders:order-experience-api-config
+INFO  2026-03-31 11:18:42,218 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Stopping flow: post:\orders:order-experience-api-config
+INFO  2026-03-31 11:18:42,220 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Stopping flow: get:\orders\(orderId):order-experience-api-config
+INFO  2026-03-31 11:18:42,222 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Stopping flow: put:\orders\(orderId)\status:order-experience-api-config
+INFO  2026-03-31 11:18:42,223 [Embedded] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Stopping Bean: org.mule.runtime.module.extension.internal.runtime.config.ConfigurationProviderToolingAdapter-httpListenerConfig
+INFO  2026-03-31 11:18:42,239 [Embedded] [] org.mule.service.http.impl.service.server.grizzly.GrizzlyHttpServer - Stopped listener on 'http://0.0.0.0:8081'
+INFO  2026-03-31 11:18:42,240 [Embedded] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Stopping Bean: org.mule.runtime.module.extension.internal.runtime.config.ConfigurationProviderToolingAdapter-processApiConfig
+INFO  2026-03-31 11:18:42,240 [Embedded] [] org.mule.runtime.core.internal.util.queue.QueueXaResourceManager - Stopping ResourceManager
+INFO  2026-03-31 11:18:42,240 [Embedded] [] org.mule.runtime.core.internal.util.queue.QueueXaResourceManager - Stopped ResourceManager
+INFO  2026-03-31 11:18:42,262 [Embedded] [] org.mule.runtime.core.internal.logging - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing application 'order-experience-api'                                 +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2026-03-31 11:18:42,262 [Embedded] [] org.mule.runtime.core.internal.logging - Stopping app 'order-experience-api' with no mule context
+INFO  2026-03-31 11:18:42,338 [Embedded] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Disposing Bean: org.mule.runtime.module.extension.internal.runtime.config.ConfigurationProviderToolingAdapter-httpListenerConfig
+INFO  2026-03-31 11:18:42,339 [Embedded] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Disposing Bean: org.mule.runtime.module.extension.internal.runtime.config.ConfigurationProviderToolingAdapter-processApiConfig
+INFO  2026-03-31 11:18:42,405 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Disposing flow: order-experience-api-main
+INFO  2026-03-31 11:18:42,407 [Embedded] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Disposing Bean: listener
+INFO  2026-03-31 11:18:42,407 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Disposing flow: health-check-flow
+INFO  2026-03-31 11:18:42,408 [Embedded] [] org.mule.runtime.core.internal.lifecycle.AbstractLifecycleManager - Disposing Bean: listener
+INFO  2026-03-31 11:18:42,408 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Disposing flow: get:\orders:order-experience-api-config
+INFO  2026-03-31 11:18:42,408 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Disposing flow: post:\orders:order-experience-api-config
+INFO  2026-03-31 11:18:42,409 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Disposing flow: get:\orders\(orderId):order-experience-api-config
+INFO  2026-03-31 11:18:42,409 [Embedded] [] org.mule.runtime.core.internal.construct.FlowConstructLifecycleManager - Disposing flow: put:\orders\(orderId)\status:order-experience-api-config
+INFO  2026-03-31 11:18:42,626 [Embedded] [] org.mule.runtime.core.internal.logging - 
+**********************************************************************
+* Application "order-experience-api" shut down normally on:          *
+* 3/31/26, 11:18 AM                                                  *
+* Up for: 0 days, 0 hours, 0 mins, 45.46 sec                         *
+**********************************************************************
+INFO  2026-03-31 11:18:42,893 [Embedded] [] org.mule.runtime.core.internal.logging - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Undeployed artifact 'order-experience-api'                                   +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2026-03-31 11:18:42,894 [Embedded] [] org.mule.runtime.core.internal.logging - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping domain 'default'                                                    +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2026-03-31 11:18:42,895 [Embedded] [] org.mule.runtime.core.internal.logging - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing domain 'default'                                                   +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2026-03-31 11:18:42,895 [Embedded] [] org.mule.runtime.core.internal.logging - Stopping domain 'default' with no mule context
+INFO  2026-03-31 11:18:42,896 [Embedded] [] org.mule.runtime.core.internal.logging - 
+**********************************************************************
+* Domain "default" shut down normally on: 3/31/26, 11:18 AM          *
+* Up for: 0 days, 0 hours, 0 mins, 55.511 sec                        *
+**********************************************************************
+INFO  2026-03-31 11:18:43,103 [Embedded] [] com.mulesoft.mule.runtime.plugin.manager.MulePluginManager - Stopping plugin: coverage-server-plugin
+INFO  2026-03-31 11:18:43,167 [Embedded] [] org.mule.service.scheduler.internal.service.DefaultSchedulerService - Stopping DefaultSchedulerService...
+INFO  2026-03-31 11:18:43,233 [Embedded] [] org.quartz.core.QuartzScheduler - Scheduler [MuleRuntime]._$_NON_CLUSTERED shutting down.
+INFO  2026-03-31 11:18:43,233 [Embedded] [] org.quartz.core.QuartzScheduler - Scheduler [MuleRuntime]._$_NON_CLUSTERED paused.
+INFO  2026-03-31 11:18:43,288 [Embedded] [] org.quartz.core.QuartzScheduler - Scheduler [MuleRuntime]._$_NON_CLUSTERED shutdown complete.
+INFO  2026-03-31 11:18:43,288 [Embedded] [] org.mule.service.scheduler.internal.service.DefaultSchedulerService - Stopped org.mule.service.scheduler.internal.service.DefaultSchedulerService$1@6c906c27
+INFO  2026-03-31 11:18:44,322 [main] [] org.mule.munit.remote.coverage.CoverageManager - Shutting down coverage server
+INFO  2026-03-31 11:18:44,323 [main] [] org.mule.munit.remote.coverage.CoverageManager - Calculating application coverage
+INFO  2026-03-31 11:18:44,333 [main] [] org.mule.munit.remote.RemoteRunner - Done

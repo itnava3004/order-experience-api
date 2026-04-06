@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd
+        http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+  <http:listener-config name="httpListenerConfig">
+    <http:listener-connection host="${http.host}" port="${http.port}"/>
+  </http:listener-config>
+
+  <http:request-config name="processApiConfig" responseTimeout="${http.response.timeout}">
+    <http:request-connection host="${api.process.host}" port="${api.process.port}"
+                             connectionIdleTimeout="${http.request.timeout}"/>
+  </http:request-config>
+
+  <apikit:config name="order-experience-api-config" raml="order-experience-api.raml"
+                 outboundHeadersMapName="outHeaders" httpStatusVarName="httpStatus"/>
+
+  <flow name="order-experience-api-main">
+    <http:listener config-ref="httpListenerConfig" path="${api.basePath}/*">
+      <http:response statusCode="#[vars.httpStatus default 200]">
+        <http:headers>#[vars.outHeaders default {}]</http:headers>
+      </http:response>
+      <http:error-response statusCode="#[vars.httpStatus default 500]">
+        <http:headers>#[vars.outHeaders default {}]</http:headers>
+      </http:error-response>
+    </http:listener>
+    <set-variable variableName="correlationId"
+                  value="#[attributes.headers.'x-correlation-id' default correlationId default uuid()]"/>
+    <choice>
+      <when expression="#[isEmpty(attributes.headers.'Authorization' default '') or !(attributes.headers.'Authorization' startsWith 'Bearer ')]">
+        <raise-error type="APP:UNAUTHORIZED" description="Missing or invalid Authorization header"/>
+      </when>
+      <otherwise>
+        <logger level="DEBUG" message="[order-experience-api] Authorization header present"/>
+      </otherwise>
+    </choice>
+    <apikit:router config-ref="order-experience-api-config"/>
+    <error-handler ref="global-error-handler"/>
+  </flow>
+
+  <!-- Health Check -->
+  <flow name="health-check-flow">
+    <http:listener config-ref="httpListenerConfig" path="${api.basePath}/health">
+      <http:response statusCode="200"/>
+    </http:listener>
+    <set-payload value='{"status":"UP","name":"${app.name}","version":"${app.version}"}'
+                 mimeType="application/json"/>
+  </flow>
+
+  <!-- GET /orders -->
+  <flow name="get:\orders:order-experience-api-config">
+    <logger level="INFO" message="[order-experience-api] List Orders | correlationId=#[vars.correlationId]"/>
+    <set-variable variableName="queryParams" value="#[attributes.queryParams]"/>
+    <http:request config-ref="processApiConfig" method="GET"
+                  path="${api.process.basePath}/orders">
+      <http:headers><![CDATA[#[{
+        'x-correlation-id': vars.correlationId,
+        'client_id': p('oauth2.client.id')
+      }]]]></http:headers>
+      <http:query-params><![CDATA[#[vars.queryParams]]]></http:query-params>
+    </http:request>
+    <logger level="INFO" message="[order-experience-api] Process API responded | status=#[attributes.statusCode] | correlationId=#[vars.correlationId]"/>
+    <ee:transform>
+      <ee:message>
+        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+--- payload]]></ee:set-payload>
+      </ee:message>
+    </ee:transform>
+  </flow>
+
+  <!-- POST /orders -->
+  <flow name="post:\orders:order-experience-api-config">
+    <logger level="INFO" message="[order-experience-api] Create Order | correlationId=#[vars.correlationId]"/>
+    <set-variable variableName="idempotencyKey"
+                  value="#[attributes.headers.'x-idempotency-key' default uuid()]"/>
+    <ee:transform>
+      <ee:variables>
+        <ee:set-variable variableName="orderPayload"><![CDATA[%dw 2.0
+output application/json
+--- payload]]></ee:set-variable>
+      </ee:variables>
+    </ee:transform>
+    <set-payload value="#[vars.orderPayload]" mimeType="application/json"/>
+    <http:request config-ref="processApiConfig" method="POST"
+                  path="${api.process.basePath}/orders/submit">
+      <http:headers><![CDATA[#[{
+        'x-correlation-id': vars.correlationId,
+        'x-idempotency-key': vars.idempotencyKey,
+        'Content-Type': 'application/json'
+      }]]]></http:headers>
+    </http:request>
+    <logger level="INFO" message="[order-experience-api] Process API responded | status=#[attributes.statusCode] | correlationId=#[vars.correlationId]"/>
+    <set-variable variableName="httpStatus" value="201"/>
+    <ee:transform>
+      <ee:message>
+        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+--- payload]]></ee:set-payload>
+      </ee:message>
+    </ee:transform>
+  </flow>
+
+  <!-- GET /orders/{orderId} -->
+  <flow name="get:\orders\(orderId):order-experience-api-config">
+    <logger level="INFO" message="[order-experience-api] Get Order by ID | correlationId=#[vars.correlationId]"/>
+    <http:request config-ref="processApiConfig" method="GET"
+                  path="#['${api.process.basePath}/orders/' ++ attributes.uriParams.orderId]">
+      <http:headers><![CDATA[#[{'x-correlation-id': vars.correlationId}]]]></http:headers>
+    </http:request>
+    <logger level="INFO" message="[order-experience-api] Process API responded | status=#[attributes.statusCode] | correlationId=#[vars.correlationId]"/>
+  </flow>
+
+  <!-- PUT /orders/{orderId}/status -->
+  <flow name="put:\orders\(orderId)\status:order-experience-api-config">
+    <logger level="INFO" message="[order-experience-api] Update Order Status | correlationId=#[vars.correlationId]"/>
+    <http:request config-ref="processApiConfig" method="PUT"
+                  path="#['${api.process.basePath}/orders/' ++ attributes.uriParams.orderId ++ '/status']">
+      <http:headers><![CDATA[#[{
+        'x-correlation-id': vars.correlationId,
+        'Content-Type': 'application/json'
+      }]]]></http:headers>
+    </http:request>
+    <logger level="INFO" message="[order-experience-api] Process API responded | status=#[attributes.statusCode] | correlationId=#[vars.correlationId]"/>
+  </flow>
+</mule>

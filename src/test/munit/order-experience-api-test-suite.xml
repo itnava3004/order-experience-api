@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+      xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+        http://www.mulesoft.org/schema/mule/munit-tools http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+
+  <munit:config name="order-experience-api-test-suite"/>
+
+  <!-- ================================================================ -->
+  <!-- Test 1: GET /orders — sub-flow direct call                       -->
+  <!-- Covers: get:\orders:order-experience-api-config (100%)           -->
+  <!-- ================================================================ -->
+  <munit:test name="get-orders-test" description="Test GET /orders returns 200">
+    <munit:behavior>
+      <munit-tools:mock-when processor="http:request">
+        <munit-tools:with-attributes>
+          <munit-tools:with-attribute attributeName="config-ref" whereValue="processApiConfig"/>
+        </munit-tools:with-attributes>
+        <munit-tools:then-return>
+          <munit-tools:payload
+            value='#[output application/json --- [{"orderId": "ORD-001", "status": "PENDING"}]]'
+            mediaType="application/json"/>
+          <munit-tools:attributes value='#[{statusCode: 200}]'/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <set-variable variableName="correlationId" value="test-correlation-id"/>
+      <flow-ref name="get:\orders:order-experience-api-config"/>
+    </munit:execution>
+    <munit:validation>
+      <!-- Assert payload is not null and contains expected data -->
+      <munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+      <munit-tools:assert-that expression="#[sizeOf(payload)]" is="#[MunitTools::greaterThanOrEqualTo(1)]"/>
+      <munit-tools:assert-that expression="#[payload[0].orderId]" is="#[MunitTools::equalTo('ORD-001')]"/>
+      <munit-tools:assert-that expression="#[payload[0].status]" is="#[MunitTools::equalTo('PENDING')]"/>
+      <!-- Verify http:request to process API was called exactly once -->
+      <munit-tools:verify-call processor="http:request" times="1">
+        <munit-tools:with-attributes>
+          <munit-tools:with-attribute attributeName="config-ref" whereValue="processApiConfig"/>
+        </munit-tools:with-attributes>
+      </munit-tools:verify-call>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 2: POST /orders — sub-flow direct call                      -->
+  <!-- Covers: post:\orders:order-experience-api-config (100%)          -->
+  <!-- ================================================================ -->
+  <munit:test name="create-order-test" description="Test POST /orders returns 201">
+    <munit:behavior>
+      <munit-tools:mock-when processor="http:request">
+        <munit-tools:with-attributes>
+          <munit-tools:with-attribute attributeName="config-ref" whereValue="processApiConfig"/>
+        </munit-tools:with-attributes>
+        <munit-tools:then-return>
+          <munit-tools:payload
+            value='#[output application/json --- {"orderId": "ORD-002", "status": "CREATED"}]'
+            mediaType="application/json"/>
+          <munit-tools:attributes value='#[{statusCode: 201}]'/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <set-variable variableName="correlationId" value="test-correlation-id"/>
+      <set-payload
+        value='#[output application/json --- {"customerId": "CUST-001", "items": [{"productId": "PROD-001", "quantity": 1}], "shippingAddress": {"line1": "123 Main St", "city": "Austin", "state": "TX", "postalCode": "78701", "country": "US"}}]'
+        mimeType="application/json"/>
+      <flow-ref name="post:\orders:order-experience-api-config"/>
+    </munit:execution>
+    <munit:validation>
+      <!-- Assert httpStatus is set to 201 (String) -->
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('201')]"/>
+      <!-- Assert payload contains expected order data -->
+      <munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+      <munit-tools:assert-that expression="#[payload.orderId]" is="#[MunitTools::equalTo('ORD-002')]"/>
+      <munit-tools:assert-that expression="#[payload.status]" is="#[MunitTools::equalTo('CREATED')]"/>
+      <!-- Verify http:request to process API was called exactly once -->
+      <munit-tools:verify-call processor="http:request" times="1">
+        <munit-tools:with-attributes>
+          <munit-tools:with-attribute attributeName="config-ref" whereValue="processApiConfig"/>
+        </munit-tools:with-attributes>
+      </munit-tools:verify-call>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 3: GET /orders/{orderId} — sub-flow direct call             -->
+  <!-- Covers: get:\orders\(orderId):order-experience-api-config        -->
+  <!-- ================================================================ -->
+  <munit:test name="get-order-by-id-test" description="Test GET /orders/{orderId} returns 200">
+    <munit:behavior>
+      <munit-tools:mock-when processor="http:request">
+        <munit-tools:with-attributes>
+          <munit-tools:with-attribute attributeName="config-ref" whereValue="processApiConfig"/>
+        </munit-tools:with-attributes>
+        <munit-tools:then-return>
+          <munit-tools:payload
+            value='#[output application/json --- {"orderId": "ORD-001", "status": "PENDING"}]'
+            mediaType="application/json"/>
+          <munit-tools:attributes value='#[{statusCode: 200}]'/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <set-variable variableName="correlationId" value="test-correlation-id"/>
+      <flow-ref name="get:\orders\(orderId):order-experience-api-config"/>
+    </munit:execution>
+    <munit:validation>
+      <!-- Assert payload contains expected order data -->
+      <munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+      <munit-tools:assert-that expression="#[payload.orderId]" is="#[MunitTools::equalTo('ORD-001')]"/>
+      <munit-tools:assert-that expression="#[payload.status]" is="#[MunitTools::equalTo('PENDING')]"/>
+      <!-- Verify http:request to process API was called exactly once -->
+      <munit-tools:verify-call processor="http:request" times="1">
+        <munit-tools:with-attributes>
+          <munit-tools:with-attribute attributeName="config-ref" whereValue="processApiConfig"/>
+        </munit-tools:with-attributes>
+      </munit-tools:verify-call>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 4: PUT /orders/{orderId}/status — sub-flow direct call      -->
+  <!-- Covers: put:\orders\(orderId)\status:order-experience-api-config -->
+  <!-- ================================================================ -->
+  <munit:test name="update-order-status-test" description="Test PUT /orders/{orderId}/status returns 200">
+    <munit:behavior>
+      <munit-tools:mock-when processor="http:request">
+        <munit-tools:with-attributes>
+          <munit-tools:with-attribute attributeName="config-ref" whereValue="processApiConfig"/>
+        </munit-tools:with-attributes>
+        <munit-tools:then-return>
+          <munit-tools:payload
+            value='#[output application/json --- {"orderId": "ORD-001", "status": "CONFIRMED"}]'
+            mediaType="application/json"/>
+          <munit-tools:attributes value='#[{statusCode: 200}]'/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <set-variable variableName="correlationId" value="test-correlation-id"/>
+      <set-payload value='#[output application/json --- {"status": "CONFIRMED"}]' mimeType="application/json"/>
+      <flow-ref name="put:\orders\(orderId)\status:order-experience-api-config"/>
+    </munit:execution>
+    <munit:validation>
+      <!-- Assert payload contains expected updated order data -->
+      <munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+      <munit-tools:assert-that expression="#[payload.orderId]" is="#[MunitTools::equalTo('ORD-001')]"/>
+      <munit-tools:assert-that expression="#[payload.status]" is="#[MunitTools::equalTo('CONFIRMED')]"/>
+      <!-- Verify http:request to process API was called exactly once -->
+      <munit-tools:verify-call processor="http:request" times="1">
+        <munit-tools:with-attributes>
+          <munit-tools:with-attribute attributeName="config-ref" whereValue="processApiConfig"/>
+        </munit-tools:with-attributes>
+      </munit-tools:verify-call>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 5: Health Check — calls health-check-flow directly          -->
+  <!-- Covers: health-check-flow (100%)                                 -->
+  <!-- ================================================================ -->
+  <munit:test name="health-check-test" description="Test health check returns UP">
+    <munit:execution>
+      <flow-ref name="health-check-flow"/>
+    </munit:execution>
+    <munit:validation>
+      <!-- Assert payload is not null -->
+      <munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+      <!-- Assert payload string contains UP and app name -->
+      <munit-tools:assert-that expression="#[write(payload, 'application/json')]" is="#[MunitTools::containsString('UP')]"/>
+      <munit-tools:assert-that expression="#[write(payload, 'application/json')]" is="#[MunitTools::containsString('order-experience-api')]"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 6: Main flow — Unauthorized (no Authorization header)       -->
+  <!-- Covers: order-experience-api-main (auth check, UNAUTHORIZED)     -->
+  <!-- ================================================================ -->
+  <munit:test name="main-flow-unauthorized-test"
+              description="Test main flow returns 401 when no Authorization header"
+              expectedErrorType="APP:UNAUTHORIZED">
+    <munit:behavior>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:payload value='#[output application/json --- {}]' mediaType="application/json"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <!-- Verify apikit:router was NEVER called (auth failed before reaching it) -->
+      <munit-tools:verify-call processor="apikit:router" times="0"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 7: Main flow — Authorized path (with Bearer token)          -->
+  <!-- Covers: order-experience-api-main (authorized path + router)     -->
+  <!-- ================================================================ -->
+  <munit:test name="main-flow-authorized-test"
+              description="Test main flow authorized path reaches APIKit router">
+    <munit:behavior>
+      <munit:set-event cloneOriginalEvent="false">
+        <munit:attributes value="#[{headers: {'Authorization': 'Bearer test-token-12345', 'x-correlation-id': 'test-corr-id'}, requestPath: '/api/v1/orders', method: 'GET', queryParams: {}}]"/>
+      </munit:set-event>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:payload value='#[output application/json --- [{"orderId": "ORD-001"}]]' mediaType="application/json"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <!-- Assert payload returned from mocked APIKit router -->
+      <munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+      <!-- Assert correlationId variable was set -->
+      <munit-tools:assert-that expression="#[vars.correlationId]" is="#[MunitTools::notNullValue()]"/>
+      <!-- Verify apikit:router was called exactly once (auth passed) -->
+      <munit-tools:verify-call processor="apikit:router" times="1"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 8: Error handler — APIKIT:BAD_REQUEST (400)                 -->
+  <!-- Covers: global-error-handler APIKIT:BAD_REQUEST branch           -->
+  <!-- Strategy: Call main flow with auth, mock router to throw error   -->
+  <!-- ================================================================ -->
+  <munit:test name="error-handler-bad-request-test"
+              description="Test error handler returns 400 for APIKIT:BAD_REQUEST"
+              expectedErrorType="APIKIT:BAD_REQUEST">
+    <munit:behavior>
+      <munit:set-event cloneOriginalEvent="false">
+        <munit:attributes value="#[{headers: {'Authorization': 'Bearer test-token-12345', 'x-correlation-id': 'test-corr-id'}, requestPath: '/api/v1/orders', method: 'GET', queryParams: {}}]"/>
+      </munit:set-event>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:error typeId="APIKIT:BAD_REQUEST"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('400')]"/>
+      <munit-tools:assert-that expression="#[payload.errorCode]" is="#[MunitTools::equalTo('ORD-400')]"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 9: Error handler — APIKIT:NOT_FOUND (404)                   -->
+  <!-- Covers: global-error-handler APIKIT:NOT_FOUND branch             -->
+  <!-- ================================================================ -->
+  <munit:test name="error-handler-not-found-test"
+              description="Test error handler returns 404 for APIKIT:NOT_FOUND"
+              expectedErrorType="APIKIT:NOT_FOUND">
+    <munit:behavior>
+      <munit:set-event cloneOriginalEvent="false">
+        <munit:attributes value="#[{headers: {'Authorization': 'Bearer test-token-12345', 'x-correlation-id': 'test-corr-id'}, requestPath: '/api/v1/orders', method: 'GET', queryParams: {}}]"/>
+      </munit:set-event>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:error typeId="APIKIT:NOT_FOUND"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('404')]"/>
+      <munit-tools:assert-that expression="#[payload.errorCode]" is="#[MunitTools::equalTo('ORD-404')]"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 10: Error handler — APIKIT:METHOD_NOT_ALLOWED (405)         -->
+  <!-- Covers: global-error-handler APIKIT:METHOD_NOT_ALLOWED branch    -->
+  <!-- ================================================================ -->
+  <munit:test name="error-handler-method-not-allowed-test"
+              description="Test error handler returns 405 for APIKIT:METHOD_NOT_ALLOWED"
+              expectedErrorType="APIKIT:METHOD_NOT_ALLOWED">
+    <munit:behavior>
+      <munit:set-event cloneOriginalEvent="false">
+        <munit:attributes value="#[{headers: {'Authorization': 'Bearer test-token-12345', 'x-correlation-id': 'test-corr-id'}, requestPath: '/api/v1/orders', method: 'GET', queryParams: {}}]"/>
+      </munit:set-event>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('405')]"/>
+      <munit-tools:assert-that expression="#[payload.errorCode]" is="#[MunitTools::equalTo('ORD-405')]"/>
+      <munit-tools:assert-that expression="#[payload.message]" is="#[MunitTools::equalTo('Method not allowed')]"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 11: Error handler — APP:UNAUTHORIZED (401)                  -->
+  <!-- Covers: global-error-handler UNAUTHORIZED branch via main flow   -->
+  <!-- Note: This is already tested by test 6 (no auth header)         -->
+  <!--        This test covers the error handler payload/status         -->
+  <!-- ================================================================ -->
+  <munit:test name="error-handler-unauthorized-test"
+              description="Test error handler returns 401 for APP:UNAUTHORIZED"
+              expectedErrorType="APP:UNAUTHORIZED">
+    <munit:behavior>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:payload value='#[output application/json --- {}]' mediaType="application/json"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <!-- No auth header → triggers APP:UNAUTHORIZED → caught by error handler -->
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('401')]"/>
+      <munit-tools:assert-that expression="#[payload.errorCode]" is="#[MunitTools::equalTo('AUTH-401')]"/>
+      <munit-tools:assert-that expression="#[payload.message]" is="#[MunitTools::equalTo('Unauthorized')]"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 12: Error handler — HTTP:CONNECTIVITY (503)                 -->
+  <!-- Covers: global-error-handler HTTP:CONNECTIVITY/TIMEOUT branch    -->
+  <!-- ================================================================ -->
+  <munit:test name="error-handler-connectivity-test"
+              description="Test error handler returns 503 for HTTP:CONNECTIVITY"
+              expectedErrorType="HTTP:CONNECTIVITY">
+    <munit:behavior>
+      <munit:set-event cloneOriginalEvent="false">
+        <munit:attributes value="#[{headers: {'Authorization': 'Bearer test-token-12345', 'x-correlation-id': 'test-corr-id'}, requestPath: '/api/v1/orders', method: 'GET', queryParams: {}}]"/>
+      </munit:set-event>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:error typeId="HTTP:CONNECTIVITY"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('503')]"/>
+      <munit-tools:assert-that expression="#[payload.errorCode]" is="#[MunitTools::equalTo('SYS-503')]"/>
+      <munit-tools:assert-that expression="#[payload.message]" is="#[MunitTools::equalTo('Downstream service unavailable')]"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 13: Error handler — HTTP:TIMEOUT (503)                      -->
+  <!-- Covers: global-error-handler HTTP:TIMEOUT path                   -->
+  <!-- ================================================================ -->
+  <munit:test name="error-handler-timeout-test"
+              description="Test error handler returns 503 for HTTP:TIMEOUT"
+              expectedErrorType="HTTP:TIMEOUT">
+    <munit:behavior>
+      <munit:set-event cloneOriginalEvent="false">
+        <munit:attributes value="#[{headers: {'Authorization': 'Bearer test-token-12345', 'x-correlation-id': 'test-corr-id'}, requestPath: '/api/v1/orders', method: 'GET', queryParams: {}}]"/>
+      </munit:set-event>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:error typeId="HTTP:TIMEOUT"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('503')]"/>
+      <munit-tools:assert-that expression="#[payload.errorCode]" is="#[MunitTools::equalTo('SYS-503')]"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 14: Error handler — MULE:EXPRESSION (422)                   -->
+  <!-- Covers: global-error-handler MULE:EXPRESSION/TRANSFORMATION      -->
+  <!-- ================================================================ -->
+  <munit:test name="error-handler-expression-test"
+              description="Test error handler returns 422 for MULE:EXPRESSION"
+              expectedErrorType="MULE:EXPRESSION">
+    <munit:behavior>
+      <munit:set-event cloneOriginalEvent="false">
+        <munit:attributes value="#[{headers: {'Authorization': 'Bearer test-token-12345', 'x-correlation-id': 'test-corr-id'}, requestPath: '/api/v1/orders', method: 'GET', queryParams: {}}]"/>
+      </munit:set-event>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:error typeId="MULE:EXPRESSION"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('422')]"/>
+      <munit-tools:assert-that expression="#[payload.errorCode]" is="#[MunitTools::equalTo('ORD-422')]"/>
+      <munit-tools:assert-that expression="#[payload.message]" is="#[MunitTools::equalTo('Request could not be processed due to a transformation error')]"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 15: Error handler — APIKIT:NOT_ACCEPTABLE (415)             -->
+  <!-- Covers: global-error-handler NOT_ACCEPTABLE/UNSUPPORTED_MEDIA    -->
+  <!-- ================================================================ -->
+  <munit:test name="error-handler-not-acceptable-test"
+              description="Test error handler returns 415 for APIKIT:NOT_ACCEPTABLE"
+              expectedErrorType="APIKIT:NOT_ACCEPTABLE">
+    <munit:behavior>
+      <munit:set-event cloneOriginalEvent="false">
+        <munit:attributes value="#[{headers: {'Authorization': 'Bearer test-token-12345', 'x-correlation-id': 'test-corr-id'}, requestPath: '/api/v1/orders', method: 'GET', queryParams: {}}]"/>
+      </munit:set-event>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:error typeId="APIKIT:NOT_ACCEPTABLE"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('415')]"/>
+      <munit-tools:assert-that expression="#[payload.errorCode]" is="#[MunitTools::equalTo('ORD-415')]"/>
+      <munit-tools:assert-that expression="#[payload.message]" is="#[MunitTools::equalTo('Unsupported media type or unacceptable response format')]"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 16: Error handler — ANY catch-all (500)                     -->
+  <!-- Covers: global-error-handler ANY on-error-propagate block        -->
+  <!-- ================================================================ -->
+  <munit:test name="error-handler-catch-all-test"
+              description="Test global error handler ANY catch-all returns 500"
+              expectedErrorType="MULE:SECURITY">
+    <munit:behavior>
+      <munit:set-event cloneOriginalEvent="false">
+        <munit:attributes value="#[{headers: {'Authorization': 'Bearer test-token-12345', 'x-correlation-id': 'test-corr-id'}, requestPath: '/api/v1/orders', method: 'GET', queryParams: {}}]"/>
+      </munit:set-event>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:error typeId="MULE:SECURITY"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('500')]"/>
+      <munit-tools:assert-that expression="#[payload.errorCode]" is="#[MunitTools::equalTo('SYS-500')]"/>
+      <munit-tools:assert-that expression="#[payload.message]" is="#[MunitTools::equalTo('Internal server error')]"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 17: Error handler — APIKIT:UNSUPPORTED_MEDIA_TYPE (415)     -->
+  <!-- Covers: second type in NOT_ACCEPTABLE/UNSUPPORTED_MEDIA handler  -->
+  <!-- ================================================================ -->
+  <munit:test name="error-handler-unsupported-media-test"
+              description="Test error handler returns 415 for APIKIT:UNSUPPORTED_MEDIA_TYPE"
+              expectedErrorType="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+    <munit:behavior>
+      <munit:set-event cloneOriginalEvent="false">
+        <munit:attributes value="#[{headers: {'Authorization': 'Bearer test-token-12345', 'x-correlation-id': 'test-corr-id'}, requestPath: '/api/v1/orders', method: 'GET', queryParams: {}}]"/>
+      </munit:set-event>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:error typeId="APIKIT:UNSUPPORTED_MEDIA_TYPE"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('415')]"/>
+      <munit-tools:assert-that expression="#[payload.errorCode]" is="#[MunitTools::equalTo('ORD-415')]"/>
+    </munit:validation>
+  </munit:test>
+
+  <!-- ================================================================ -->
+  <!-- Test 18: Error handler — MULE:TRANSFORMATION (422)               -->
+  <!-- Covers: second type in EXPRESSION/TRANSFORMATION handler         -->
+  <!-- ================================================================ -->
+  <munit:test name="error-handler-transformation-test"
+              description="Test error handler returns 422 for MULE:TRANSFORMATION"
+              expectedErrorType="MULE:TRANSFORMATION">
+    <munit:behavior>
+      <munit:set-event cloneOriginalEvent="false">
+        <munit:attributes value="#[{headers: {'Authorization': 'Bearer test-token-12345', 'x-correlation-id': 'test-corr-id'}, requestPath: '/api/v1/orders', method: 'GET', queryParams: {}}]"/>
+      </munit:set-event>
+      <munit-tools:mock-when processor="apikit:router">
+        <munit-tools:then-return>
+          <munit-tools:error typeId="MULE:TRANSFORMATION"/>
+        </munit-tools:then-return>
+      </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+      <flow-ref name="order-experience-api-main"/>
+    </munit:execution>
+    <munit:validation>
+      <munit-tools:assert-that expression="#[vars.httpStatus]" is="#[MunitTools::equalTo('422')]"/>
+      <munit-tools:assert-that expression="#[payload.errorCode]" is="#[MunitTools::equalTo('ORD-422')]"/>
+    </munit:validation>
+  </munit:test>
+
+</mule>
